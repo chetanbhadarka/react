@@ -19,6 +19,6 @@ export const AuthReducer = createSlice({
   },
 });
 
-export const { onLogin, onLoading } = AuthReducer.actions;
+export const { onLoading, onLogin } = AuthReducer.actions;
 
 export default AuthReducer.reducer;
