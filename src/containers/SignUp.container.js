@@ -1,58 +1,44 @@
 import React, { useState } from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
-import { useDispatch } from "react-redux";
+import { Grid, Paper, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { loginAPI } from "../redux/action/AuthAction";
+import { registrationAPI } from "../redux/action/AuthAction";
 import { successToast } from "../redux/action/ToastAction";
-import { setUserDetail } from "../redux/reducer/UserReducer";
-import { onLogin } from "../redux/reducer/AuthReducer";
 
 const paperStyle = {
   padding: 20,
 };
-const avatarStyle = { backgroundColor: "#1bbd7e" };
 const btnstyle = { margin: "8px 0" };
 
-const SignInContainer = () => {
+const SignUpContainer = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [formValue, SetFormValue] = useState({});
 
   const handleOnChange = (event) => {
-    const { name, value, checked } = event.target;
+    const { name, value } = event.target;
     SetFormValue({
       ...formValue,
-      [name]: name === "remember" ? checked : value,
+      [name]: value,
     });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const userData = {
+      name: formValue?.uname,
       email: formValue?.email,
       password: formValue?.password,
     };
-    const loginResponse = await loginAPI(userData);
-    if (loginResponse) {
-      dispatch(onLogin(true));
-      dispatch(setUserDetail(loginResponse));
-      successToast("Sign In Successfull!");
-      navigate("/application/dashboard");
+
+    const apiResponse = await registrationAPI(userData);
+    if (apiResponse) {
+      successToast("Registration Successfull!");
+      navigate("/application/sign-in");
     }
   };
 
-  const onSignUpPress = (event) => {
+  const onLoginPress = (event) => {
     event.preventDefault();
-    navigate("/application/sign-up");
+    navigate("/application/sign-in");
   };
 
   return (
@@ -65,10 +51,20 @@ const SignInContainer = () => {
       <Paper elevation={10} style={paperStyle}>
         <form onSubmit={handleSubmit}>
           <Grid align="center">
-            <Avatar style={avatarStyle}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <h2>Sign In</h2>
+            <h2>Register</h2>
+          </Grid>
+          <Grid my={2}>
+            <TextField
+              id="uname"
+              name="uname"
+              label="Name"
+              placeholder="Enter Name"
+              variant="outlined"
+              fullWidth
+              required
+              value={formValue?.uname}
+              onChange={handleOnChange}
+            />
           </Grid>
           <Grid my={2}>
             <TextField
@@ -97,17 +93,6 @@ const SignInContainer = () => {
               onChange={handleOnChange}
             />
           </Grid>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formValue?.remember}
-                name="remember"
-                color="primary"
-                onChange={handleOnChange}
-              />
-            }
-            label="Remember me"
-          />
           <Button
             type="submit"
             color="primary"
@@ -115,7 +100,7 @@ const SignInContainer = () => {
             style={btnstyle}
             fullWidth
           >
-            Sign in
+            Register
           </Button>
           <Button
             type="button"
@@ -123,9 +108,9 @@ const SignInContainer = () => {
             variant="contained"
             style={btnstyle}
             fullWidth
-            onClick={onSignUpPress}
+            onClick={onLoginPress}
           >
-            want to register?
+            Back to Login
           </Button>
         </form>
       </Paper>
@@ -133,4 +118,4 @@ const SignInContainer = () => {
   );
 };
 
-export default SignInContainer;
+export default SignUpContainer;

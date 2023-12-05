@@ -7,16 +7,19 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { persistor, store } from "./redux/store";
-import "./index.css"
+import AxiosInterceptor from "./services/AxiosInterceptor";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </BrowserRouter>
+    <AxiosInterceptor>
+      <BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </BrowserRouter>
+    </AxiosInterceptor>
   </Provider>
 );
 
