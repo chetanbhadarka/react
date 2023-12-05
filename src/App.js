@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+  Link,
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
-function App() {
+import "react-toastify/dist/ReactToastify.css";
+
+import SignInContainer from "./containers/SignIn.container";
+import SignUpContainer from "./containers/SignUp.container";
+import DashboardContainer from "./containers/Dashboard.container";
+
+const App = () => {
+  const navigate = useNavigate();
+  const isLogin = useSelector((state) => state?.AuthReducer?.loginState);
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/application/dashboard");
+    }
+  }, [isLogin]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/application/sign-in" element={<SignInContainer />} />
+        <Route path="/application/sign-up" element={<SignUpContainer />} />
+        <Route path="/application/dashboard" element={<DashboardContainer />} />
+        <Route path="*" element={<Navigate to="/application/sign-in" />} />
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
