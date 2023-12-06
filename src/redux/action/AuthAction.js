@@ -1,6 +1,6 @@
 import axios from "axios";
 import { preFix, routeAPI } from "../constant";
-import { errorToast, successToast } from "./ToastAction";
+import { errorToast } from "./ToastAction";
 
 export const loginAPI = async (userData) => {
   const URL = preFix + routeAPI.authLogin;

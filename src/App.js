@@ -3,7 +3,6 @@ import {
   Routes,
   Route,
   Navigate,
-  useLocation,
   useNavigate,
   Link,
 } from "react-router-dom";
@@ -21,8 +20,8 @@ const App = () => {
   const isLogin = useSelector((state) => state?.AuthReducer?.loginState);
 
   useEffect(() => {
-    if (isLogin) {
-      navigate("/application/dashboard");
+    if (!isLogin) {
+      navigate("/application/sign-in");
     }
   }, [isLogin]);
 
