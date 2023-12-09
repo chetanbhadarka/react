@@ -1,6 +1,6 @@
 import axios from "axios";
 import { preFix, routeAPI } from "../constant";
-import { errorToast, successToast } from "./ToastAction";
+import { errorToast } from "./ToastAction";
 
 export const loginAPI = async (userData) => {
   const URL = preFix + routeAPI.authLogin;
@@ -14,6 +14,7 @@ export const loginAPI = async (userData) => {
       }
     })
     .catch((error) => {
+      console.error("loginAPI => ", error);
       errorToast("Something went wrong! Please try again.");
     });
 };
@@ -35,6 +36,7 @@ export const registrationAPI = async (userData) => {
       }
     })
     .catch((error) => {
+      console.error("registrationAPI => ", error);
       errorToast("Something went wrong! Please try again.");
     });
 };

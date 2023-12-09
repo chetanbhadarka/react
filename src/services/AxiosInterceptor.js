@@ -9,7 +9,7 @@ const AxiosInterceptor = ({ children }) => {
     async (config) => {
       if (token) {
         config.baseURL = preFix;
-        config.headers["Authorization"] = token;
+        config.headers["Authorization"] = `bearer ${token}`;
       }
       return config;
     },
