@@ -5,15 +5,19 @@ import thunk from "redux-thunk";
 
 import AuthReducer from "./reducer/AuthReducer";
 import UserReducer from "./reducer/UserReducer";
+import TableReducer from "./reducer/TableReducer";
 
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["TableReducer"],
+  // whitelist: [""],
 };
 
 const rootReducer = combineReducers({
   AuthReducer,
   UserReducer,
+  TableReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

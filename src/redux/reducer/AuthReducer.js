@@ -16,10 +16,10 @@ export const AuthReducer = createSlice({
       state.loginState = payload;
       state.loading = false;
     },
-    onLogout: () => initialState,
+    onLogoutAuthReducer: () => initialState,
   },
 });
 
-export const { onLoading, onLogin, onLogout } = AuthReducer.actions;
+export const { onLoading, onLogin, onLogoutAuthReducer } = AuthReducer.actions;
 
 export default AuthReducer.reducer;
